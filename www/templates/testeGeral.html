@@ -1,0 +1,20 @@
+<ion-view title="Teste Geral" id="page2">
+    <ion-content padding="true" class="has-header">
+        <button ng-click="iniciarTeste()" id="testeGeral-button1" style="font-size:-1px;" class=" button button-dark  button-block ">Iniciar Teste!</button>
+        <form id="testeGeral-form4" class="list ">
+            <div id="testeGeral-markdown1" style="color:#000000;">
+                <p>Status</p>
+            </div>
+            <label class="item item-input " id="testeGeral-textarea1" name="okay">
+                <span class="input-label">Text</span><textarea placeholder="Right">12</textarea>
+            </label>
+        </form>
+        <div id="testeGeral-markdown2" style="color:#000000;">
+            <p>Resultado do Teste</p>
+        </div>
+        <div  style="width:100%;">
+            <button style="text-align:left;" id="testeGeral-button2" class=" button button-balanced  " ng-click="ativa()">{{eduardo}}</button>
+            <button style="text-align: right; margin-left: 50%;" id="testeGeral-button4" class=" button button-assertive  ">Falhou</button>
+        </div>
+    </ion-content>
+</ion-view>
