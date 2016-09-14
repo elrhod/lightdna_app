@@ -25,9 +25,7 @@ function ($scope, $timeout, $stateParams) {
  	//	$timeout(WifiWizard.connectNetwork("LightDNA", win, fail), 3000); 
  	}
 
- 	function conect_wifi(){
- 		WifiWizard.connectNetwork("LightDNA", win, fail);	
- 	}
+ 	function conect_wifi(){	WifiWizard.connectNetwork("LightDNA", win, fail);		}
 
 	function WifiNOTEn(){ console.log("Wifi Enable returned not OK...");	}
 
@@ -40,6 +38,15 @@ function ($scope, $timeout, $stateParams) {
 	function win(){	console.log("Sucesso em conectar em LightDNA"); }
 
 	function fail(){ console.log("Erro ao conectar em LightDNA");  }
+
+	//New way to listen to topics
+ 	cordova.plugins.CordovaMqTTPlugin.listen("lights/+",function(payload,params){
+	  //Callback:- (If the user has published to /topic/room/hall)
+	  //payload : contains payload data
+	  //params : {singlewc:room,multiwc:hall}
+	  console.log("Aqui!!");
+	  console.log("Mensagem:"+params);
+	})
 
   }
 }])
