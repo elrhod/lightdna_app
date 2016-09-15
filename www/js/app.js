@@ -46,12 +46,6 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives
       });
     });
     
-    //New way to listen to topics
-     cordova.plugins.CordovaMqTTPlugin.listen("/lights/+",function(payload,params){
-      //Callback:- (If the user has published to /topic/room/hall)
-      //payload : contains payload data
-      //params : {singlewc:room,multiwc:hall}
-    });
 
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
