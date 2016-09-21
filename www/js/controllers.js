@@ -11,80 +11,26 @@ function ($scope, $stateParams) {
 .controller('listaDeDispositivosCtrl', ['$scope', '$timeout', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $timeout, $stateParams) {
-  $scope.conectar = function() {
-  	var URLBrokerMQTT = "tcp://10.10.10.1";
- 	if (WifiWizard.isWifiEnabled(WifiEnOk, WifiNOTEn) === true) {
- 		console.log("Wifi IS Enabled.");
- 			$timeout(conect_wifi, 3000);
- 	} else {
- 		console.log("Wifi NOT Enabled.");
- 		WifiWizard.setWifiEnabled(true, WifiEnabled, WifiEnabledfail);
- 		console.log("Wifi IS Enabled.");
- 			$timeout(conect_wifi, 3000);
- 		// inserir delay
- 	//	$timeout(WifiWizard.connectNetwork("LightDNA", win, fail), 3000); 
- 	}
+function ($scope, $timeout, $stateParams, Servconnection) {
+	$scope.conectar = function() {
+		// var btc = new window.plugins.mqtt({
+  //           uri: 'ws://10.10.10.1',
+  //           keepAliveInterval: 120,
+  //           clientId: 'Elrhod_test',
+  //           reportConnectionStatus: false,
+  //           reconnectDelay: [1000, 5000, 10000, -1]
+  //       });
+  //       btc.connect();
+ 
 
- 	function conect_wifi(){	WifiWizard.connectNetwork("LightDNA", win, fail);		}
+		 
+		Servconnection.connection.connect();
+	}
 
-	function WifiNOTEn(){ console.log("Wifi Enable returned not OK...");	}
-
-	function WifiEnOk(){ console.log("Wifi Enable Returned ok.");	}
-
-	function WifiEnabled(){	console.log("SetWifiEnabled returned OK.");	}
-
-	function WifiEnabledfail(){	console.log("SetWifiEnabled returned Error.");}
-
-	function win(){	console.log("Sucesso em conectar em LightDNA"); }
-
-	function fail(){ console.log("Erro ao conectar em LightDNA");  }
-
-	//New way to listen to topics
- 	cordova.plugins.CordovaMqTTPlugin.listen("lights",function(payload,params){
-	  //Callback:- (If the user has published to /topic/room/hall)
-	  //payload : contains payload data
-	  //params : {singlewc:room,multiwc:hall}
-	  console.log("Aqui!!");
-	  console.log("Mensagem:"+params);
-	})
-
-	
-	  cordova.plugins.CordovaMqTTPlugin.connect({
-	    url:URLBrokerMQTT, //a public broker used for testing purposes only. Try using a self hosted broker for production.
-	    port:1883,
-	    clientId:"elrhod_teste",
-	    connectionTimeout:3000,
-	    willTopicConfig:{
-	        qos:0,
-	        retain:true,
-	        topic:"willtopic/device/android",
-	        payload:"mobile toggle"
-	    },
-	    username:"uname",
-	    password:'pass',
-	    keepAlive:60,
-	    success:function(s){
-	        console.log("Sucesso ao conectar no broker MQTT:"+URLBrokerMQTT);
-	        cordova.plugins.CordovaMqTTPlugin.subscribe({
-	           topic:"lights/+",
-	           qos:0,
-	          success:function(s){
-	            console.log("Inscrito em tópicos do servidor MQTT!");
-	          },
-	          error:function(e){
-	          }
-	        })
-	    },
-	    error:function(e){
-	        console.log("Erro ao conectar no broker MQTT:"+URLBrokerMQTT);
-	    },
-	    onConnectionLost:function (){
-	        console.log("Desconectado do broker MQTT:"+URLBrokerMQTT);
-	    }
-	  });
-  }
 }])
+
+
+
 
 .controller('testeGeralCtrl', ['$scope','$timeout', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
