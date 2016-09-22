@@ -32,18 +32,17 @@ function ($scope, $stateParams) {
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $timeout, $stateParams, Servconnection) {
 	$scope.botconectar = function() {
-		 
-		//Servconnection.connection.connect();
-		Servconnection.connecta();
-	}
 
+		Servconnection.connecta();
+
+	}
+ 		
 }])
 
-
-.controller('testeGeralCtrl', ['$scope','$timeout', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('testeGeralCtrl', ['$scope','$timeout', '$stateParams', 'Servconnection',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $timeout, $stateParams) {
+function ($scope, $timeout, $stateParams, Servconnection) {
 	$scope.eduardo = "clique-me";
 	var edu=0;
 	$scope.ativa = function(){
@@ -55,36 +54,10 @@ function ($scope, $timeout, $stateParams) {
 
 	function fudeo(){ $scope.eduardo = "fudeo";	}
 	
-	var URLBrokerMQTT = "tcp://10.10.10.1";
 	$scope.iniciarTeste = function(){
-		cordova.plugins.CordovaMqTTPlugin.publish({
-	       topic:"lights",
-	       payload:"W0001-100",
-	       qos:0,
-	       retain:false,
-	      success:function(s){
-	        console.log("Sucesso ao publicar no broker MQTT:"+URLBrokerMQTT);
-	      },
-	      error:function(e){
-	        console.log("Erro ao publicar no broker MQTT:"+URLBrokerMQTT);
-	      }
-	    });
-
-	    cordova.plugins.CordovaMqTTPlugin.publish({
-	       topic:"lights",
-	       payload:"W0001-000",
-	       qos:0,
-	       retain:false,
-	      success:function(s){
-	        console.log("Sucesso ao publicar no broker MQTT:"+URLBrokerMQTT);
-	      },
-	      error:function(e){
-	        console.log("Erro ao publicar no broker MQTT:"+URLBrokerMQTT);
-	      }
-	    });
-	    console.log("Teste Finalizado!");
+		Servconnection.LigaTudo();
+		Servconnection.DesligaTudo();
 	}
-
 }])
    
 .controller('testeUnitRioCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
