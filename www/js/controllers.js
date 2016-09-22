@@ -7,29 +7,37 @@ angular.module('app.controllers', [])
 function ($scope, $stateParams) {
 
 }])
+.service('Servconnection', function(){
+  this.connecta = function(){
+    var connection = new window.plugins.mqtt({
+        uri: 'ws://10.10.10.1:9001',
+        keepAliveInterval: 120,
+        clientId: 'Elrhod_test',
+        reportConnectionStatus: true,
+        reconnectDelay: [1000, 5000, 10000, -1] //three tries to reconnect will take place. If -1 met, then reconnect process will stop.
+    });            
+    connection.on('connected', function () {
+        connection.subscribe('lights/+/status', {qos: 0});
+        connection.publish('lights', 'W0001-100', {qos: 0, retained: true});
+        connection.on('lights/+/status', function (value) {
+          console.log('Yay! Value is: ' + value);
+        });
+    });
+    connection.connect();
+  }
+})
 
-.controller('listaDeDispositivosCtrl', ['$scope', '$timeout', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('listaDeDispositivosCtrl', ['$scope', '$timeout', '$stateParams','Servconnection', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $timeout, $stateParams, Servconnection) {
-	$scope.conectar = function() {
-		// var btc = new window.plugins.mqtt({
-  //           uri: 'ws://10.10.10.1',
-  //           keepAliveInterval: 120,
-  //           clientId: 'Elrhod_test',
-  //           reportConnectionStatus: false,
-  //           reconnectDelay: [1000, 5000, 10000, -1]
-  //       });
-  //       btc.connect();
- 
-
+	$scope.botconectar = function() {
 		 
-		Servconnection.connection.connect();
+		//Servconnection.connection.connect();
+		Servconnection.connecta();
 	}
 
 }])
-
-
 
 
 .controller('testeGeralCtrl', ['$scope','$timeout', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
@@ -85,5 +93,4 @@ function ($scope, $timeout, $stateParams) {
 function ($scope, $stateParams) {
 
 
-}])
-    
+}]);

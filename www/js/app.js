@@ -7,11 +7,11 @@
 // 'starter.controllers' is found in controllers.js
 
 
-angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives','app.services',])
+var app = angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives','app.services']);
 
 
 
-.run(function($ionicPlatform) {
+app.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     var URLBrokerMQTT = "tcp://10.10.10.1";
     $ionicPlatform.ready(function() {
@@ -29,10 +29,9 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives
     // org.apache.cordova.statusbar required
     StatusBar.styleDefault();
   }
-})
+});
 
-
-.service('Servconnection', function(){
+app.service('Servconnection', function(){
   this.connecta = function(){
     var connection = new window.plugins.mqtt({
         uri: 'ws://10.10.10.1:9001',
@@ -48,6 +47,6 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives
           console.log('Yay! Value is: ' + value);
         });
     });
+    connection.connect();
   }
-})
-
+});
